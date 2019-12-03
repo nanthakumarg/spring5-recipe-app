@@ -1,6 +1,7 @@
 package com.nantha.spring5recipeapp.services;
 
 import com.nantha.spring5recipeapp.domain.Recipe;
+import com.nantha.spring5recipeapp.exceptions.NotFoundException;
 import com.nantha.spring5recipeapp.repositories.RecipeRepository;
 import org.junit.Before;
 import org.junit.Test;
@@ -26,6 +27,14 @@ public class RecipeServiceImplTest {
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
         recipeService = new RecipeServiceImpl(recipeRepository);
+    }
+
+    @Test(expected = NotFoundException.class)
+    public void getRecipeByIdNotFoundTest() throws  Exception {
+        Optional<Recipe> recipeOptional = Optional.empty();
+        when(recipeRepository.findById(anyLong())).thenReturn(recipeOptional);
+        Recipe recipe = recipeService.findById(1L);
+
     }
 
 

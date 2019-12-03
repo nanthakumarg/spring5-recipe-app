@@ -1,6 +1,7 @@
 package com.nantha.spring5recipeapp.services;
 
 import com.nantha.spring5recipeapp.domain.Recipe;
+import com.nantha.spring5recipeapp.exceptions.NotFoundException;
 import com.nantha.spring5recipeapp.repositories.RecipeRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -32,7 +33,8 @@ public class RecipeServiceImpl implements RecipeService {
         Optional<Recipe> recipeOptional = recipeRepository.findById(l);
 
         if (!recipeOptional.isPresent()) {
-            throw new RuntimeException("Recipe Not Found!");
+            //throw new RuntimeException("Recipe Not Found!");
+            throw new NotFoundException("Recipe Not Found! For ID Value: "+l.toString());
         }
         return recipeOptional.get();
     }
